@@ -43,5 +43,4 @@ GameTest >> testSpaceShipsAreCreatedWhenCreateSpaceShip [
 aGame:= Game new.
 aSpaceShip:= aGame createSpaceShip: 'nombre'.
 self assert: aSpaceShip notNil.
-
 ]
