@@ -17,6 +17,11 @@ Dice >> defineFaces: aNumberOfFaces [
     faces := aNumberOfFaces.
 ]
 
+{ #category : #public }
+Dice >> faces [
+^faces.
+]
+
 { #category : #initialization }
 Dice >> initialize [ 
 faces:=0.
