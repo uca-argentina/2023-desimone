@@ -30,14 +30,6 @@ SpaceShip >> score [
 ]
 
 { #category : #initialization }
-SpaceShip >> throwDices: aGame [
-	| sum |
-	sum:= aGame rollDicesAndSum.
-	score:= score + sum.
-	Transcript show: score; cr.
-]
-
-{ #category : #initialization }
 SpaceShip >> throwDices: aGame board: aBoard [
 	| sum |
 	sum:= aGame rollDicesAndSum.

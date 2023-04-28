@@ -52,10 +52,20 @@ players add: aSpaceShip.
 ^aSpaceShip
 ]
 
+{ #category : #accessing }
+Game >> dices [
+^dices.
+]
+
 { #category : #'as yet unclassified' }
 Game >> initialize [ 
 dices:=0.
 players:= OrderedCollection new.
+]
+
+{ #category : #'as yet unclassified' }
+Game >> players [
+^players.
 ]
 
 { #category : #public }
