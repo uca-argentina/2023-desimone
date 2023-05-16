@@ -1,45 +1,40 @@
 Class {
-	#name : #SpaceShip,
+	#name : #Spaceship,
 	#superclass : #Object,
 	#instVars : [
 		'score',
-		'name',
-		'win'
+		'number',
+		'winner'
 	],
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #initialize }
-SpaceShip >> initialize [ 
-score:=0.
-]
-
-{ #category : #accessing }
-SpaceShip >> name [
-^name.
+{ #category : #public }
+Spaceship >> number [
+^number.
 ]
 
 { #category : #public }
-SpaceShip >> name: aName [
-name:=aName.
+Spaceship >> number: aNumber [ 
+	number:= aNumber.
 ]
 
-{ #category : #accessing }
-SpaceShip >> score [
+{ #category : #public }
+Spaceship >> score [ 
 ^score.
 ]
 
 { #category : #public }
-SpaceShip >> throwDices: aGame board: aBoard [
-	| sum |
-	sum:= aGame rollDicesAndSum.
-	score:= score + sum.
-	Transcript show: score; cr.	
-	win:= aGame checkIfWon: score board:aBoard.
-	Transcript show: win; cr.
+Spaceship >> score: aScore [ 
+	score := aScore.
 ]
 
-{ #category : #accessing }
-SpaceShip >> win [
-^win.
+{ #category : #public }
+Spaceship >> winner [
+^winner.
+]
+
+{ #category : #public }
+Spaceship >> winner: isWinner [
+winner := isWinner.
 ]

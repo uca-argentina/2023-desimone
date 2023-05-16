@@ -7,17 +7,12 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #initialization }
-Board >> initialize [ 
-size:= 0.
-]
-
-{ #category : #initialization }
-Board >> size [
+{ #category : #public }
+Board >> size [ 
 ^size.
 ]
 
-{ #category : #initialization }
-Board >> size: aSize [
-size:= aSize.
+{ #category : #public }
+Board >> size: aSize [ 
+	size:= aSize
 ]
