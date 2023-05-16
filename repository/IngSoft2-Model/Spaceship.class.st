@@ -36,5 +36,5 @@ Spaceship >> winner [
 
 { #category : #accessing }
 Spaceship >> winner: isWinner [
-winner := isWinner.
+winner := isWinner. 
 ]
