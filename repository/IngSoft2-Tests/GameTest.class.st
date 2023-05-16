@@ -64,14 +64,16 @@ game := Game createGameWithBoardandSpaceshipsAndDice: 'name' and: 4 and: 5 and: 
 
 { #category : #tests }
 GameTest >> testPlayWithNumberOfSpaceship [
-| aGame |
+| aGame aSpaceship|
 aGame:= Game createGameWithBoardandSpaceshipsAndDice: 'name' and: 4 and: 5 and: #(1 1 1).
-aGame play: 1.
+aGame play:1.
 aGame play:2.
 aGame play:3.
 aGame play:4.
 aGame play:5.
 aGame play:1.
+	aSpaceship:= aGame spaceships detect: [:spaceship | spaceship number = 3 ].
+	self assert: aSpaceship score equals: 3.
 
 ]
 

@@ -100,3 +100,8 @@ Game >> showPosition: aSpaceshipNumber [
 Game >> showWinner [ 
 	^spaceships detect: [ :aSpaceship | aSpaceship winner = 1] 
 ]
+
+{ #category : #public }
+Game >> spaceships [
+	^ spaceships
+]
