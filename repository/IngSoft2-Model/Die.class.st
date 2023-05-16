@@ -19,5 +19,5 @@ faces := aFaceNumber.
 
 { #category : #accessing }
 Die >> roll [
-	^faces atRandom.
+	^faces atRandom. 
 ]
