@@ -8,14 +8,15 @@ Class {
 		'dice',
 		'turn',
 		'finish',
-		'status'
+		'status',
+		'rows'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
-Game class >> createGameWithBoardandSpaceshipsAndDice: aName and: aSize and: aNumberOfSpaceships and: aDieSize [
-	 ^(self new) initializeCreateGameWithSpaceships: aName and: aSize and: aNumberOfSpaceships and: aDieSize.
+Game class >> createGameWithBoardandSpaceshipsAndDice: aName and: aSize and: aNumberOfSpaceships and: aDieSize and: numberOfRows [
+	 ^(self new) initializeCreateGameWithSpaceships: aName and: aSize and: aNumberOfSpaceships and: aDieSize and: numberOfRows.
 ]
 
 { #category : #public }
@@ -23,7 +24,11 @@ Game >> ThrowDice [
 	| sum |
 	sum := dice sum: [ :aDie | aDie roll ].
 	^sum.
-	
+]
+
+{ #category : #public }
+Game >> board [ 
+^board.
 ]
 
 { #category : #public }
@@ -31,13 +36,12 @@ Game >> dice [
 ^dice
 ]
 
-{ #category : #initialize }
-Game >> initializeCreateGameWithSpaceships: aName and: aSize and: aNumberOfSpaceships and: aDiceSize [ 
+{ #category : #public }
+Game >> initializeCreateGameWithSpaceships: aName and: aSize and: aNumberOfSpaceships and: aDiceSize and: numberOfRows [ 
 	aSize > 0 ifTrue: [| aBoard| 
-	aBoard := Board new.
-	board := aBoard.
-	board size: aSize.  ]
+	board := Board createBoardWithSizeAndSquares: aSize.  ]
 	ifFalse: [ Error signal: 'Error. Negative size. ' ].
+	rows := numberOfRows.
 	
 	self name: aName.
 	aNumberOfSpaceships > 0 ifTrue: [ 	spaceships := Array new: aNumberOfSpaceships.
@@ -61,23 +65,29 @@ turn := 1.
 status:= 0.
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 Game >> name [
 ^name.
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 Game >> name: aName [ 
 	name:= aName
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 Game >> play: aSpaceshipNumber [
 	| aSpaceship|
 aSpaceship := spaceships at: aSpaceshipNumber.
 		status = 0
 		ifTrue: [ aSpaceship number = turn
 		ifTrue: [  aSpaceship score: aSpaceship score + self ThrowDice.
+			(board squares at: (aSpaceship score)) = 'WormHole'
+			ifTrue:[ aSpaceship score: aSpaceship score -4.].
+			(board squares at: (aSpaceship score)) = 'Speedup'
+			ifTrue:[ aSpaceship score: aSpaceship score +4.].
+			(board squares at: (aSpaceship score)) = 'Moonwalk'
+			ifTrue: [ aSpaceship score: aSpaceship score + board moonwalk ].
 			turn < spaceships size
 			ifTrue: [ turn := turn +1. ]
 			ifFalse: [ turn := 1. ]
@@ -85,23 +95,26 @@ aSpaceship := spaceships at: aSpaceshipNumber.
 		ifFalse: [ Error signal: 'Error. its not the spaceships turn' ]. ]
 		ifFalse: [ Error signal: 'Error. Game finished' ].
 	aSpaceship score > board size
-	ifTrue: [ status := 1.
-		aSpaceship winner: 1. ].
+	ifTrue: [ rows := rows+1.
+		aSpaceship score: 0. ].
+	aSpaceship rows >  rows
+	ifTrue:[status:=1
+		] 
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 Game >> showPosition: aSpaceshipNumber [
 	| aSpaceship |
 	aSpaceship:= spaceships detect: [:spaceship | spaceship number = aSpaceshipNumber ].
 	^aSpaceship score.
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 Game >> showWinner [ 
-	^spaceships detect: [ :aSpaceship | aSpaceship winner = 1] 
+	^spaceships detect: [ :aSpaceship | aSpaceship winner = 1]  
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 Game >> spaceships [
-	^ spaceships
+	^ spaceships  
 ]
