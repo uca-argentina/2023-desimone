@@ -1,6 +1,9 @@
 Class {
 	#name : #DieTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'squares'
+	],
 	#category : #'IngSoft2-Tests'
 }
 
