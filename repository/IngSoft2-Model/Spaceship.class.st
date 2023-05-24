@@ -2,39 +2,22 @@ Class {
 	#name : #Spaceship,
 	#superclass : #Object,
 	#instVars : [
-		'score',
-		'number',
-		'winner'
+		'name'
 	],
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #accessing }
-Spaceship >> number [
-^number.
+{ #category : #'instance creation' }
+Spaceship class >> createSpaceshipWithName: aName [ 
+	^(self new) initializeWithName: aName.
 ]
 
-{ #category : #accessing }
-Spaceship >> number: aNumber [ 
-	number:= aNumber.
+{ #category : #initialize }
+Spaceship >> initializeWithName: aName [ 
+	name := aName.
 ]
 
-{ #category : #accessing }
-Spaceship >> score [ 
-^score.
-]
-
-{ #category : #accessing }
-Spaceship >> score: aScore [ 
-	score := aScore.
-]
-
-{ #category : #accessing }
-Spaceship >> winner [
-^winner.
-]
-
-{ #category : #accessing }
-Spaceship >> winner: isWinner [
-winner := isWinner. 
+{ #category : #initialize }
+Spaceship >> name [
+^name.
 ]

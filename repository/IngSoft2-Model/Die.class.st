@@ -7,17 +7,14 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #accessing }
-Die >> faces [
-	^ faces
+{ #category : #'instance creation' }
+Die class >> createDieOf: numberOfFaces [
+	numberOfFaces > 0 ifTrue: [ ^(self new) initializeDieOf: numberOfFaces. ]
+	ifFalse: [ Error signal: 'Number of faces cant be negative' ]
+
 ]
 
-{ #category : #accessing }
-Die >> faces: aFaceNumber [
-faces := aFaceNumber.
-]
-
-{ #category : #accessing }
-Die >> roll [
-	^faces atRandom. 
+{ #category : #initialize }
+Die >> initializeDieOf: numberOfFaces [ 
+	faces := numberOfFaces.
 ]
