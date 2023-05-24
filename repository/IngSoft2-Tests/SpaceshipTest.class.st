@@ -5,56 +5,11 @@ Class {
 }
 
 { #category : #tests }
-SpaceshipTest >> testNumber [
-| aSpaceship num|
-aSpaceship := Spaceship new.
-aSpaceship number: 3.
-num := aSpaceship number.
-self assert: num equals: 3.
+SpaceshipTest >> testSpaceshipIsCreated [
 
-]
-
-{ #category : #tests }
-SpaceshipTest >> testNumberIs3WhenNumber3 [
-| aSpaceship |
-aSpaceship := Spaceship new.
-aSpaceship number: 3.
-self assert: aSpaceship number equals:3.
-
-]
-
-{ #category : #tests }
-SpaceshipTest >> testScore [
-| aSpaceship sc|
-aSpaceship := Spaceship new.
-aSpaceship score: 3.
-sc  := aSpaceship score.
-self assert: sc  equals: 3.
-
-]
-
-{ #category : #tests }
-SpaceshipTest >> testScoreIs3WhenScore3 [
-| aSpaceship |
-aSpaceship := Spaceship new.
-aSpaceship score: 3.
-self assert: aSpaceship score equals:3.
-
-]
-
-{ #category : #tests }
-SpaceshipTest >> testWinner [
-| aSpaceship wn|
-aSpaceship := Spaceship new.
-aSpaceship winner: 1.
-wn := aSpaceship winner.
-self assert: wn equals: 1.
-]
-
-{ #category : #tests }
-SpaceshipTest >> testWinnerIs1WhenWinner1 [
-| aSpaceship |
-aSpaceship := Spaceship new.
-aSpaceship winner:1.
-self assert: aSpaceship winner equals:1.
+	| aSpaceship |
+	aSpaceship := Spaceship createSpaceshipWithName: 'name'.
+	self assert: aSpaceship notNil.
+	self assert: aSpaceship name equals: 'name'.
+	
 ]

@@ -2,41 +2,24 @@ Class {
 	#name : #Board,
 	#superclass : #Object,
 	#instVars : [
-		'size',
-		'squares',
-		'moonwalk'
+		'size'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
-Board class >> createBoardWithSizeAndSquares: aSize [ 
-	^(self new) initializeCreateBoardWithSizeAndSquares: aSize.
+Board class >> createBoardOf: aSize [ 
+	aSize > 0 ifTrue: [ 	^(self new) initializeBoardOf: aSize. ]
+		ifFalse: [ Error signal: ' Size cant be negative' ].
+
 ]
 
-{ #category : #initialization }
-Board >> initializeCreateBoardWithSizeAndSquares: aSize [ 
+{ #category : #initialize }
+Board >> initializeBoardOf: aSize [ 
 	size := aSize.
-	squares := Array new: aSize.
-	moonwalk := 5.
 ]
 
-{ #category : #initialization }
-Board >> moonwalk [
-^moonwalk.
-]
-
-{ #category : #initialization }
+{ #category : #initialize }
 Board >> size [ 
 ^size.
-]
-
-{ #category : #initialization }
-Board >> size: aSize [ 
-	size:= aSize
-]
-
-{ #category : #initialization }
-Board >> squares [
-^squares. 
 ]
