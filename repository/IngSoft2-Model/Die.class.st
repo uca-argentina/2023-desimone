@@ -14,7 +14,17 @@ Die class >> createDieOf: numberOfFaces [
 
 ]
 
+{ #category : #private }
+Die >> faces [
+	^ faces
+]
+
 { #category : #initialize }
 Die >> initializeDieOf: numberOfFaces [ 
 	faces := numberOfFaces.
+]
+
+{ #category : #private }
+Die >> roll [
+	^faces atRandom.
 ]
