@@ -17,6 +17,15 @@ GameTest >> testaGameIsCreatedWhenCreateGameOf [
 
 	| aGame |
 	aGame := Game createGameOf:50 and: 4 and: #(6 6 6).
-	aGame.
 	self assert: (aGame isKindOf: Game).
+]
+
+{ #category : #tests }
+GameTest >> testaSpaceshipCanPlayWhenGamePlayWithTheNumberOfTheSpaceship [
+| aGame aSpaceship|
+
+aGame := Game createGameOf: 50 and:3  and:#(6 6 6).
+
+aSpaceship := aGame playWithSpaceship:1.
+
 ]
