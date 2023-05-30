@@ -2,7 +2,8 @@ Class {
 	#name : #Spaceship,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		'name',
+		'score'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -15,9 +16,21 @@ Spaceship class >> createSpaceshipWithName: aName [
 { #category : #initialize }
 Spaceship >> initializeWithName: aName [ 
 	name := aName.
+	score := 0.
+]
+
+{ #category : #initialize }
+Spaceship >> moveForward: aThrowResult [
+
+score := score + aThrowResult.
 ]
 
 { #category : #initialize }
 Spaceship >> name [
 ^name.
+]
+
+{ #category : #initialize }
+Spaceship >> score [
+	^score
 ]

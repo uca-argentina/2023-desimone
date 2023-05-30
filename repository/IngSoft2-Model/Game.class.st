@@ -11,11 +11,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-Game class >> createGame [
-	^(self new) 
-]
-
-{ #category : #'instance creation' }
 Game class >> createGameOf: aBoardSize and: aNumberOfSpaceships and: DiceFaces [
 	aBoardSize > 1 & aNumberOfSpaceships > 0 & DiceFaces notNil ifTrue: [ ^(self new) intializeGameWith: aBoardSize and: aNumberOfSpaceships and: DiceFaces ]  
 	ifFalse: [ Error signal: 'Conditions not met' ].
@@ -43,8 +38,23 @@ Game >> intializeGameWith: aBoardSize and: aNumberOfSpaceships and: aDieFaces [
 
 { #category : #private }
 Game >> playWithSpaceship: aSpaceshipNumber [ 
-	|aSpaceship|
+	|aSpaceship throw|
 	
 aSpaceship := spaceships at: aSpaceshipNumber.
-self checkturn:aSpaceshipNumber.
+
+throw := self throwDice.
+
+aSpaceship moveForward: throw.
+]
+
+{ #category : #private }
+Game >> spaceships [
+^spaceships.
+]
+
+{ #category : #private }
+Game >> throwDice [
+	| sum |
+	sum := dice sum: [ :aDie | aDie roll ].
+	^sum.
 ]
