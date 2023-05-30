@@ -21,6 +21,24 @@ self assert: aSpaceship score > 0.
 ]
 
 { #category : #tests }
+GameTest >> testASpaceshipCanPlayWhenCorrectTurnAndTheScoreIsCorrectlyUpdated [
+
+| aGame aSpaceship aDie |
+
+aGame := DeterministicGame new.
+aDie := DeterministicDie new.
+
+aGame die: aDie.
+aGame createSpaceships: 3.
+aGame deterministicPlayWithASpaceship: 1.
+aGame deterministicPlayWithASpaceship: 1.
+aSpaceship  := aGame spaceships at:1.  
+aSpaceship.
+self assert: aSpaceship score equals:12.
+
+]
+
+{ #category : #tests }
 GameTest >> testCheckTurnIsFalseWhenIncorrectSpaceship [
 | aGame canPlayOnIncorrectTurn|
 
@@ -40,6 +58,21 @@ aGame := Game createGameOf: 50 and:3  and:#(6 6 6).
 canPlayOnCorrectTurn := aGame checkturn: 1.
 
 self assert: canPlayOnCorrectTurn equals:true.
+]
+
+{ #category : #tests }
+GameTest >> testNextTurnChangesTo1AfterTheLastSpaceshipPlay [
+
+| aGame testNextTurn|
+
+aGame := Game createGameOf: 50 and:2  and:#(6 6 6).
+
+aGame playWithSpaceship: 1.
+aGame playWithSpaceship: 2.
+testNextTurn := aGame nextSpaceshipToPlay.
+self assert: testNextTurn equals: 1.
+
+
 ]
 
 { #category : #tests }
