@@ -40,7 +40,7 @@ Game >> intializeGameWith: aBoardSize and: aNumberOfSpaceships and: aDieFaces [
 Game >> nextTurn [
 nextSpaceshipToPlay < 4 ifTrue:[
 	nextSpaceshipToPlay := nextSpaceshipToPlay +1]
-ifFalse:[nextSpaceshipToPlay :=1]
+ifFalse:[nextSpaceshipToPlay :=1].
 ]
 
 { #category : #private }
