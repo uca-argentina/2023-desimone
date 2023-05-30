@@ -9,7 +9,18 @@ SpaceshipTest >> testSpaceshipIsCreated [
 
 	| aSpaceship |
 	aSpaceship := Spaceship createSpaceshipWithName: 'name'.
-	self assert: aSpaceship notNil.
+	self assert: (aSpaceship isKindOf: Spaceship).
 	self assert: aSpaceship name equals: 'name'.
+	
+]
+
+{ #category : #tests }
+SpaceshipTest >> testSpaceshipThrowDieAndScoreIsUpdated [
+
+| aSpaceship aDie|
+
+aSpaceship := Spaceship createSpaceshipWithName: 'name'.
+aDie := DeterministicDie new.
+
 	
 ]

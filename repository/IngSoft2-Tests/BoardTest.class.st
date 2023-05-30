@@ -10,7 +10,7 @@ BoardTest >> testBoardIsCreated [
 	| aBoard |
 	
 	aBoard := Board createBoardOf: 50.
-	self assert: aBoard notNil.
+	self assert: (aBoard isKindOf: Board).
 ]
 
 { #category : #tests }

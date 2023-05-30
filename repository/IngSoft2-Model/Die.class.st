@@ -27,4 +27,5 @@ Die >> initializeDieOf: numberOfFaces [
 { #category : #private }
 Die >> roll [
 	^faces atRandom.
+	
 ]
