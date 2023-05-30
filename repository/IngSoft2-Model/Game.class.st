@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'board',
 		'spaceships',
-		'dice'
+		'dice',
+		'nextSpaceshipToPlay'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -21,6 +22,11 @@ Game class >> createGameOf: aBoardSize and: aNumberOfSpaceships and: DiceFaces [
 	 
 ]
 
+{ #category : #private }
+Game >> checkturn: aSpaceshipNumber [ 
+	nextSpaceshipToPlay = aSpaceshipNumber ifTrue: [ ^true ] ifFalse: [ ^false ].
+]
+
 { #category : #initialize }
 Game >> intializeGameWith: aBoardSize and: aNumberOfSpaceships and: aDieFaces [ 
 	board := Board createBoardOf: aBoardSize.
@@ -32,4 +38,13 @@ Game >> intializeGameWith: aBoardSize and: aNumberOfSpaceships and: aDieFaces [
 	aDieFaces do: [ : newDieWithFaces | | aDie |
 		aDie := Die createDieOf: newDieWithFaces.
 		dice add: aDie].
+	nextSpaceshipToPlay := 1.
+]
+
+{ #category : #private }
+Game >> playWithSpaceship: aSpaceshipNumber [ 
+	|aSpaceship|
+	
+aSpaceship := spaceships at: aSpaceshipNumber.
+self checkturn:aSpaceshipNumber.
 ]
