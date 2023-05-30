@@ -37,8 +37,13 @@ Game >> intializeGameWith: aBoardSize and: aNumberOfSpaceships and: aDieFaces [
 ]
 
 { #category : #private }
+Game >> nextSpaceshipToPlay [
+^nextSpaceshipToPlay.
+]
+
+{ #category : #private }
 Game >> nextTurn [
-nextSpaceshipToPlay < 4 ifTrue:[
+(nextSpaceshipToPlay < spaceships size) ifTrue:[
 	nextSpaceshipToPlay := nextSpaceshipToPlay +1]
 ifFalse:[nextSpaceshipToPlay :=1].
 ]
@@ -64,7 +69,7 @@ Game >> spaceships [
 
 { #category : #private }
 Game >> throwDice [
-	| sum |
-	sum := dice sum: [ :aDie | aDie roll ].
-	^sum.
+	| sumOfRollResults |
+	sumOfRollResults := dice sum: [ :aDie | aDie roll ].
+	^sumOfRollResults.
 ]
