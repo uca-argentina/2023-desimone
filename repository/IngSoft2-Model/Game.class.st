@@ -37,14 +37,24 @@ Game >> intializeGameWith: aBoardSize and: aNumberOfSpaceships and: aDieFaces [
 ]
 
 { #category : #private }
+Game >> nextTurn [
+nextSpaceshipToPlay < 4 ifTrue:[
+	nextSpaceshipToPlay := nextSpaceshipToPlay +1]
+ifFalse:[nextSpaceshipToPlay :=1].
+]
+
+{ #category : #private }
 Game >> playWithSpaceship: aSpaceshipNumber [ 
-	|aSpaceship throw|
+(self checkturn: aSpaceshipNumber) ifTrue:[	|aSpaceship throw|
 	
 aSpaceship := spaceships at: aSpaceshipNumber.
 
 throw := self throwDice.
 
 aSpaceship moveForward: throw.
+self nextTurn.]
+ifFalse: [ Error signal: 'it is not the turn of this spaceship' ].
+
 ]
 
 { #category : #private }
