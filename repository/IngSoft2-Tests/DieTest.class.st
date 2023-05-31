@@ -5,49 +5,73 @@ Class {
 }
 
 { #category : #tests }
-DieTest >> testDieIsCreated [
+DieTest >> test001ADieIsCreatedWith5FacesThenICheckThatTheNumberOfFacesIsCorrect [
 
 | aDie |
-aDie := Die createDieOf: 5.
-self assert: (aDie isKindOf: Die)
+
+aDie := Die of: 5.
+
+self assert: aDie faces equals: 5.
 ]
 
 { #category : #tests }
-DieTest >> testDieIsCreatedWith6Faces [
+DieTest >> test002ADieOf2FacesCantBeCreatedThenErrorSignalRaises [
 
-| aDie |
-aDie := Die createDieOf: 6.
-self assert: aDie faces equals: 6.
+	| aDie |
+	[aDie := Die of: -2.]
+	on: Error 
+	do: [:error|	self assert: error messageText equals:  'a die cannot have less than 3 faces'  ]
+
+
 ]
 
 { #category : #tests }
-DieTest >> testExceptionWhenNumberOfFacesIsNegative [
+DieTest >> test003ADieOf3FacesCanBeCreatedThenICheckThatFacesAre3 [
 
-| aDie |
-[aDie := Die createDieOf: -5.]
-on: Error 
-do: [ :error | self assert:   error messageText equals: 'Number of faces cant be negative']
+	| aDie |
+	aDie := Die of: 3.
+	self assert: aDie faces equals:3.
+
+
 ]
 
 { #category : #tests }
-DieTest >> testRollIs6WhenFaces6 [
+DieTest >> test004DeterministicDieCanRollAndThenICheckThatResultsAreCorrect [
 
-| aDie roll | 
+	| aDie |
+	aDie := DeterministicDie of: 3.
+self assert:	aDie roll equals:1.
 
-aDie := DeterministicDie new.
 
-roll:= aDie roll.
-
-self assert: roll equals: aDie faces.
 ]
 
 { #category : #tests }
-DieTest >> testRollIsBetween1andFaces [
+DieTest >> test005DeterministicDieCanRollAndThenICheckThatResultsAreCorrectAndCurrentValueReturnsToTheBeginningWhenTheValueStripIsFinished [
 
-	| aDie aRoll|
-	aDie := Die createDieOf: 6.
-	aRoll := aDie roll.
-	self assert: (aRoll  >=1).
-	self assert: (aRoll<=aDie faces).
-	
+	| aDie |
+	aDie := DeterministicDie of: 3.
+	aDie roll.
+	aDie roll.
+	aDie roll.
+self assert:	aDie roll equals:1.
+
+
+]
+
+{ #category : #tests }
+DieTest >> test006ADieCanRollAndResultIsBetween1AndFaces [
+
+	| aDie |
+	aDie := Die of: 3.
+	self assert: aDie roll > 0 & aDie roll < aDie faces.
+]
+
+{ #category : #tests }
+DieTest >> test007DiceCanBeCreatedWithDifferentNumberOfFaces [
+
+	| aDie1 aDie2|
+	aDie1 := Die of: 3.
+	aDie2 := Die of:7.
+	self assert: aDie1 faces equals:3.
+	self assert: aDie2 faces equals:7.
 ]
