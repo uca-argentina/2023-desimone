@@ -2,22 +2,29 @@ Class {
 	#name : #DeterministicDie,
 	#superclass : #Object,
 	#instVars : [
-		'faces'
+		'faces',
+		'possibleValues',
+		'index'
 	],
 	#category : #'IngSoft2-Tests'
 }
 
-{ #category : #private }
-DeterministicDie >> faces [
-	^ faces
+{ #category : #'instance creation' }
+DeterministicDie class >> of: aNumberOfFaces [ 
+	^(self new) initializeWith: aNumberOfFaces.
 ]
 
-{ #category : #private }
-DeterministicDie >> initialize [ 
-	faces := 6.
+{ #category : #initialize }
+DeterministicDie >> initializeWith: aNumberOfFaces [ 
+	faces := aNumberOfFaces.
+	possibleValues := #(1 2 3).
+	index :=1.
 ]
 
-{ #category : #private }
+{ #category : #action }
 DeterministicDie >> roll [
-	^faces.
+	| aRoll|
+	aRoll := possibleValues at: index.
+	index := (index \\ possibleValues size)+1.
+	^aRoll.
 ]

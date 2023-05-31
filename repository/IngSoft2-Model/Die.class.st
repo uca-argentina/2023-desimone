@@ -4,28 +4,31 @@ Class {
 	#instVars : [
 		'faces'
 	],
+	#classInstVars : [
+		'faces'
+	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
-Die class >> createDieOf: numberOfFaces [
-	numberOfFaces > 0 ifTrue: [ ^(self new) initializeDieOf: numberOfFaces. ]
-	ifFalse: [ Error signal: 'Number of faces cant be negative' ]
-
+Die class >> of: aNumberOfFaces [ 
+	aNumberOfFaces > 2 ifTrue:[^(self new) initializeWith: aNumberOfFaces.]
+	ifFalse: [ Error signal: 'a die cannot have less than 3 faces' ].
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 Die >> faces [
+
 	^ faces
 ]
 
-{ #category : #initialize }
-Die >> initializeDieOf: numberOfFaces [ 
-	faces := numberOfFaces.
+{ #category : #initialization }
+Die >> initializeWith: aNumberOfFaces [. 
+
+faces := aNumberOfFaces.
 ]
 
-{ #category : #private }
+{ #category : #action }
 Die >> roll [
 	^faces atRandom.
-	
 ]

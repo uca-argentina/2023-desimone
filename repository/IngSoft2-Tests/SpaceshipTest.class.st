@@ -5,22 +5,11 @@ Class {
 }
 
 { #category : #tests }
-SpaceshipTest >> testSpaceshipIsCreated [
+SpaceshipTest >> test001ASpaceshipIsCreatedThenICheckThatTheNameIsCorrect [
 
-	| aSpaceship |
-	aSpaceship := Spaceship createSpaceshipWithName: 'name'.
-	self assert: (aSpaceship isKindOf: Spaceship).
-	self assert: aSpaceship name equals: 'name'.
-	
-]
+| aSpaceship |
 
-{ #category : #tests }
-SpaceshipTest >> testSpaceshipThrowDieAndScoreIsUpdated [
+aSpaceship := Spaceship with: 'Spaceship 1'.
 
-| aSpaceship aDie|
-
-aSpaceship := Spaceship createSpaceshipWithName: 'name'.
-aDie := DeterministicDie new.
-
-	
+self assert: aSpaceship name equals: 'Spaceship 1'.
 ]
