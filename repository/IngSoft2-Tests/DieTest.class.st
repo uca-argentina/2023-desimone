@@ -38,18 +38,23 @@ DieTest >> test003ADieOf3FacesCanBeCreatedThenICheckThatFacesAre3 [
 { #category : #tests }
 DieTest >> test004DeterministicDieCanRollAndThenICheckThatResultsAreCorrect [
 
-	| aDie |
-	aDie := DeterministicDie of: 3.
-self assert:	aDie roll equals:1.
-
-
+	| aDie firstRoll secondRoll thirdRoll |
+	aDie := DeterministicDie with: #( 1 2 3 ).
+	firstRoll := aDie roll. 
+	secondRoll := aDie roll. 
+	thirdRoll := aDie roll.
+	
+	self assert: firstRoll equals: 1.
+	self assert: secondRoll equals:2.
+	self assert: thirdRoll equals: 3.
+	
 ]
 
 { #category : #tests }
 DieTest >> test005DeterministicDieCanRollAndThenICheckThatResultsAreCorrectAndCurrentValueReturnsToTheBeginningWhenTheValueStripIsFinished [
 
 	| aDie |
-	aDie := DeterministicDie of: 3.
+	aDie := DeterministicDie with: #(1 2 3).
 	aDie roll.
 	aDie roll.
 	aDie roll.
@@ -63,7 +68,7 @@ DieTest >> test006ADieCanRollAndResultIsBetween1AndFaces [
 
 	| aDie |
 	aDie := Die of: 3.
-	self assert: aDie roll > 0 & aDie roll < aDie faces.
+	self assert: aDie roll > 0 & aDie roll <= aDie faces.
 ]
 
 { #category : #tests }

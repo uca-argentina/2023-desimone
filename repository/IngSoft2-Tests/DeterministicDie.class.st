@@ -10,14 +10,14 @@ Class {
 }
 
 { #category : #'instance creation' }
-DeterministicDie class >> of: aNumberOfFaces [ 
-	^(self new) initializeWith: aNumberOfFaces.
+DeterministicDie class >> with: aArrayOfPossibleValues [ 
+	^(self new) initializeWith: aArrayOfPossibleValues.
 ]
 
 { #category : #initialize }
-DeterministicDie >> initializeWith: aNumberOfFaces [ 
-	faces := aNumberOfFaces.
-	possibleValues := #(1 2 3).
+DeterministicDie >> initializeWith: aArrayOfPossibleValues [ 
+	faces := 3.
+	possibleValues := aArrayOfPossibleValues.
 	index :=1.
 ]
 
