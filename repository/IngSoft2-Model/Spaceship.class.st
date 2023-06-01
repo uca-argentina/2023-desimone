@@ -31,11 +31,6 @@ Spaceship >> score [
 ^score
 ]
 
-{ #category : #'instance creation' }
-Spaceship >> self [
-	self shouldBeImplemented.
-]
-
 { #category : #action }
 Spaceship >> throwDice: aDiceCollection [
 	score:= score + (aDiceCollection collect: [ :die | die roll ]) sum.	

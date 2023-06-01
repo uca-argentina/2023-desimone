@@ -25,11 +25,6 @@ Game >> dice [
 ]
 
 { #category : #initialize }
-Game >> initializeWith: aSpaceship [ 
-	spaceships := aSpaceship
-]
-
-{ #category : #initialize }
 Game >> initializeWith: aSpaceship and: aBoard and: aDie [
 	spaceships := aSpaceship.
 	board := aBoard.
