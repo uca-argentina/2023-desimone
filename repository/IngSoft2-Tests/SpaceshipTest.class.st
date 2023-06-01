@@ -37,7 +37,7 @@ self assert: aGame spaceships score equals: 0.
 ]
 
 { #category : #tests }
-SpaceshipTest >> test004ASpaceshipIsBeingCreatedWithoutNameThenErrorSignal [
+SpaceshipTest >> test004ASpaceshipIsCreatedWithoutNameThenErrorSignal [
 
 | aSpaceship |
 

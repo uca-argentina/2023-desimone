@@ -36,6 +36,16 @@ Game >> initializeWith: aSpaceship and: aBoard and: aDie [
 	dice :=aDie.
 ]
 
+{ #category : #action }
+Game >> play: aSpaceshipName [ 
+	|aPlayingSpaceship|
+	
+aPlayingSpaceship  := spaceships detect: [ :aSpaceship | 
+		                  aSpaceship name = aSpaceshipName ].
+
+aPlayingSpaceship throwDice: dice.
+]
+
 { #category : #accessing }
 Game >> spaceships [
 	^ spaceships

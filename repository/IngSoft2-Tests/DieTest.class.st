@@ -64,7 +64,7 @@ self assert:	aDie roll equals:1.
 ]
 
 { #category : #tests }
-DieTest >> test006ADieCanRollAndResultIsBetween1AndFaces [
+DieTest >> test006ADieRollAndResultIsBetween1AndFaces [
 
 	| aDie |
 	aDie := Die of: 3.

@@ -8,20 +8,26 @@ Class {
 }
 
 { #category : #preconditions }
-GameTest >> createGame [
+GameTest >> createGame: typeOfDie [
 
-| aSpaceship1 aSpaceship2 aDie1 aDie2 aBoard aGame aSpaceshipCollection aDiceCollection|
+	| aSpaceship1 aSpaceship2 aDie1 aDie2 aBoard aGame aSpaceshipCollection aDiceCollection |
 	aSpaceship1 := Spaceship with: 'spaceship 1'.
 	aSpaceship2 := Spaceship with: 'spaceship 2'.
 	aSpaceshipCollection := OrderedCollection new.
 	aSpaceshipCollection add: aSpaceship1.
 	aSpaceshipCollection add: aSpaceship2.
-
-	aDie1 := Die of: 5.
-	aDie2 := Die of: 6.
-	aDiceCollection := OrderedCollection new.
-	aDiceCollection add: aDie1.
-	aDiceCollection add: aDie2.
+	typeOfDie = 'normal' ifTrue: [ 
+		aDie1 := Die of: 5.
+		aDie2 := Die of: 6.
+		aDiceCollection := OrderedCollection new.
+		aDiceCollection add: aDie1.
+		aDiceCollection add: aDie2 ].
+	typeOfDie = 'deterministic' ifTrue: [ 
+		aDie1 := DeterministicDie  with: #(1 2 3).
+		aDie2 := DeterministicDie  with: #(4 5 6).
+		aDiceCollection := OrderedCollection new.
+		aDiceCollection add: aDie1.
+		aDiceCollection add: aDie2 ].
 
 	aBoard := Board of: 50.
 
@@ -29,7 +35,7 @@ GameTest >> createGame [
 		         with: aSpaceshipCollection
 		         and: aBoard
 		         and: aDiceCollection.
-	^aGame.
+	^ aGame
 ]
 
 { #category : #tests }
@@ -102,7 +108,7 @@ GameTest >> test005AGameCanBeCreatedWithSpaceshipsAndDiceThenICheckSizeOfDiceEqu
 
 	| aGame|
 
-	aGame := self createGame.
+	aGame := self createGame: 'normal'.
 
 	self assert: aGame dice size equals: 2.
 ]
@@ -112,7 +118,7 @@ GameTest >> test006AGameCanBeCreatedWithSpaceshipsAndDiceThenICheckNameOfSpacesh
 
 	|aGame foundSpaceship1 foundSpaceship2|
 	
-	aGame := self createGame.
+	aGame := self createGame: 'normal'.
 
 	foundSpaceship1 := aGame spaceships detect: [ :aSpaceship | 
 		                  aSpaceship name = 'spaceship 1' ].
@@ -126,10 +132,24 @@ GameTest >> test006AGameCanBeCreatedWithSpaceshipsAndDiceThenICheckNameOfSpacesh
 GameTest >> test007AGameCanBeCreatedWithSpaceshipsAndDiceThenICheckFacesOfDiceAreCorrect [
 
 	|aGame foundDie1 foundDie2|
-	aGame := self createGame.
+	aGame := self createGame:'normal'.
 
 	foundDie1 := aGame dice detect: [ :aDie | aDie faces = 5 ].
 	foundDie2 := aGame dice detect: [ :aDie | aDie faces = 6 ].
 	self assert: foundDie1 faces equals: 5.
 	self assert: foundDie2 faces equals: 6.
+]
+
+{ #category : #tests }
+GameTest >> test008ASpaceshipThrowsTheDiceThenMovesTo5 [
+
+	|aGame aSpaceship1|
+	aGame := self createGame: 'deterministic'.
+	aGame play: 'spaceship 1'.
+	aSpaceship1 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 1' ].
+	self assert: aSpaceship1 score equals: 5.
+]
+
+{ #category : #tests }
+GameTest >> test009WhenIncorrectPlayerTurnTriesToPlayThenItIsNotAllowed [
 ]

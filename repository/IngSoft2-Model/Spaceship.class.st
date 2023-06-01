@@ -35,3 +35,8 @@ Spaceship >> score [
 Spaceship >> self [
 	self shouldBeImplemented.
 ]
+
+{ #category : #action }
+Spaceship >> throwDice: aDiceCollection [
+	score:= score + (aDiceCollection collect: [ :die | die roll ]) sum.	
+]
