@@ -47,3 +47,26 @@ do: [ :error | self assert: error messageText equals: 'Name cant be empty' ].
 
 
 ]
+
+{ #category : #tests }
+SpaceshipTest >> test005ASpaceshipThrowsTheDiceThenMovesTo5 [
+
+| aSpaceship aDiceCollection aDie1 aDie2|
+
+aSpaceship := Spaceship with: 'spaceship 1'.
+
+aDie1 := DeterministicDie with: #(1 2 3).
+aDie2 := DeterministicDie with: #(4 5 6).
+
+aDiceCollection := OrderedCollection new.
+aDiceCollection add: aDie1.
+aDiceCollection add: aDie2.
+
+aSpaceship throwDice: aDiceCollection.
+
+self assert: aSpaceship score equals: 5.
+
+
+
+
+]
