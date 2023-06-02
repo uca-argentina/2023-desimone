@@ -10,12 +10,14 @@ Class {
 { #category : #preconditions }
 GameTest >> createGame: typeOfDie [
 
-	| aSpaceship1 aSpaceship2 aDie1 aDie2 aBoard aGame aSpaceshipCollection aDiceCollection |
+	| aSpaceship1 aSpaceship2 aDie1 aDie2 aBoard aGame aSpaceshipCollection aDiceCollection aSpaceship3|
 	aSpaceship1 := Spaceship with: 'spaceship 1'.
 	aSpaceship2 := Spaceship with: 'spaceship 2'.
+	aSpaceship3 := Spaceship with: 'spaceship 3'.
 	aSpaceshipCollection := OrderedCollection new.
 	aSpaceshipCollection add: aSpaceship1.
 	aSpaceshipCollection add: aSpaceship2.
+	aSpaceshipCollection add: aSpaceship3.
 	typeOfDie = 'normal' ifTrue: [ 
 		aDie1 := Die of: 5.
 		aDie2 := Die of: 6.
@@ -151,5 +153,71 @@ GameTest >> test008ASpaceshipThrowsTheDiceThenMovesTo5 [
 ]
 
 { #category : #tests }
-GameTest >> test009WhenIncorrectPlayerTurnTriesToPlayThenItIsNotAllowed [
+GameTest >> test009IncorrectSpaceshipTurnTriesToPlayThenItIsNotAllowed [
+
+	| aGame |
+	aGame := self createGame: 'normal'.
+
+	self
+		should: [ aGame play: 'spaceship 2'. ]
+		raise: Error
+		withExceptionDo: [ :error | 
+			self
+				assert: error messageText
+				equals: 'its not this player turn' ]
+]
+
+{ #category : #tests }
+GameTest >> test010ASpaceshipPlayThenTurnIsUpdated [
+
+	| aGame |
+	aGame := self createGame: 'normal'.
+
+	aGame play: 'spaceship 1'.
+	self assert: aGame turn equals: 2.
+]
+
+{ #category : #tests }
+GameTest >> test011AFullRoundIsPlayedThenTurnIsAgain1 [
+
+	| aGame |
+	aGame := self createGame: 'normal'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	self assert: aGame turn equals: 1.
+]
+
+{ #category : #tests }
+GameTest >> test012AFullRoundIsPlayedThenScoreIsUpdated [
+
+	| aGame aSpaceship1 aSpaceship2 aSpaceship3|
+	aGame := self createGame: 'deterministic'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aSpaceship1 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 1' ].
+	aSpaceship2 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 2' ].
+	aSpaceship3 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 3' ].
+	self assert: aSpaceship1 score equals:5.
+	self assert: aSpaceship2 score equals:7.
+	self assert: aSpaceship3 score equals:9.
+]
+
+{ #category : #tests }
+GameTest >> test013AFullRoundIsPlayedThenANewRoundCanBePlayed [
+	| aGame aSpaceship1 aSpaceship2|
+	aGame := self createGame: 'deterministic'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aSpaceship1 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 1' ].
+	aSpaceship2 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 2' ].
+	self assert: aSpaceship1 score equals:10.
+	self assert: aSpaceship2 score equals:14.
 ]

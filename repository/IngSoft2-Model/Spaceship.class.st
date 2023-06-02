@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'score'
+		'score',
+		'turn'
 	],
 	#category : #'IngSoft2-Model'
 }
