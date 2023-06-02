@@ -31,7 +31,7 @@ GameTest >> createGame: typeOfDie [
 		aDiceCollection add: aDie1.
 		aDiceCollection add: aDie2 ].
 
-	aBoard := Board of: 50.
+	aBoard := Board of: 26.
 
 	aGame := Game
 		         with: aSpaceshipCollection
@@ -185,6 +185,7 @@ GameTest >> test011AFullRoundIsPlayedThenTurnIsAgain1 [
 
 	aGame play: 'spaceship 1'.
 	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
 	self assert: aGame turn equals: 1.
 ]
 
@@ -207,7 +208,7 @@ GameTest >> test012AFullRoundIsPlayedThenScoreIsUpdated [
 
 { #category : #tests }
 GameTest >> test013AFullRoundIsPlayedThenANewRoundCanBePlayed [
-	| aGame aSpaceship1 aSpaceship2|
+	| aGame aSpaceship1 aSpaceship2 aSpaceship3|
 	aGame := self createGame: 'deterministic'.
 
 	aGame play: 'spaceship 1'.
@@ -218,6 +219,102 @@ GameTest >> test013AFullRoundIsPlayedThenANewRoundCanBePlayed [
 	aGame play: 'spaceship 3'.
 	aSpaceship1 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 1' ].
 	aSpaceship2 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 2' ].
+	aSpaceship3 := aGame spaceships detect: [ :aSpaceship | aSpaceship name = 'spaceship 3' ].
 	self assert: aSpaceship1 score equals:10.
 	self assert: aSpaceship2 score equals:14.
+	self assert: aSpaceship3 score equals:18.
+]
+
+{ #category : #tests }
+GameTest >> test014AIncorrectSpaceshipTurnTriesToPlayOnANewRoundThenItIsNotAllowed [
+	| aGame |
+	aGame := self createGame: 'deterministic'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	self
+		should: [ aGame play: 'spaceship 2'. ]
+		raise: Error
+		withExceptionDo: [ :error | 
+			self
+				assert: error messageText
+				equals: 'its not this player turn' ]
+]
+
+{ #category : #tests }
+GameTest >> test015ASpaceshipScoreReachesTheMaximumThenSpaceshipWinsTheGame [
+	| aGame |
+	aGame := self createGame: 'deterministic'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	self assert: aGame winner equals: 'spaceship 3'.
+	self assert: aGame gameStatus equals: 'finished'.
+]
+
+{ #category : #tests }
+GameTest >> test016ASpaceshipTriesToPlayWhenAGameIsFinishedThenItIsNotAllowed [
+	| aGame |
+	aGame := self createGame: 'deterministic'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	self
+		should: [ aGame play: 'spaceship 1'. ]
+		raise: Error
+		withExceptionDo: [ :error | 
+			self
+				assert: error messageText
+				equals: 'The game is over' ].
+]
+
+{ #category : #tests }
+GameTest >> test017WhenshowPositionThenTheGameCanShowThePositionOfTheSpaceship [
+	| aGame |
+	aGame := self createGame: 'deterministic'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	self assert: (aGame showPosition: 'spaceship 1') equals: 15.
+]
+
+{ #category : #tests }
+GameTest >> test018WhenshowPositionOfTheSpaceshipThatWinsThenTheGameCanShowThePositionOfTheSpaceshipCorrectly [
+	| aGame |
+	aGame := self createGame: 'deterministic'.
+
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	aGame play: 'spaceship 1'.
+	aGame play: 'spaceship 2'.
+	aGame play: 'spaceship 3'.
+	self assert: (aGame showPosition: 'spaceship 3') equals: 26.
 ]

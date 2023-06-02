@@ -36,3 +36,9 @@ Spaceship >> score [
 Spaceship >> throwDice: aDiceCollection [
 	score:= score + (aDiceCollection collect: [ :die | die roll ]) sum.	
 ]
+
+{ #category : #accessing }
+Spaceship >> updateScore: aMaximumValue [
+
+score := aMaximumValue.
+]
